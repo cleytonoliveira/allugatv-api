@@ -5,4 +5,13 @@ export default class Product {
     readonly price: number,
     readonly description?: string,
   ) {}
+
+  static create(
+    name: string,
+    image: string,
+    price: number,
+    description?: string,
+  ) {
+    return new Product(name, image, price, description);
+  }
 }
