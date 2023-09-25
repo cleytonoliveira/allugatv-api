@@ -16,8 +16,15 @@ export default class ProductRepositoryDatabase implements ProductRepository {
     });
   }
 
-  async getAll(): Promise<Product[]> {
-    const products = await this.prisma.product.findMany();
+  async getAll(
+    orderBy: "price" | "name",
+    order: "asc" | "desc",
+  ): Promise<Product[]> {
+    const products = await this.prisma.product.findMany({
+      orderBy: {
+        [orderBy]: order,
+      },
+    });
     return products.map((product) => ({
       productId: product.id,
       name: product.name,

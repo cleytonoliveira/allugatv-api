@@ -8,8 +8,8 @@ export default class ProductController {
     readonly getProducts: GetProducts,
     readonly addProduct: AddProduct,
   ) {
-    this.httpServer.on("get", "/products", async () => {
-      const products = await getProducts.execute();
+    this.httpServer.on("get", "/products", async (_body: any, query: any) => {
+      const products = await getProducts.execute(query);
       return {
         statusCode: 200,
         body: products,
