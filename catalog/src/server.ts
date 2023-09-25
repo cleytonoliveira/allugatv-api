@@ -5,7 +5,7 @@ import AddProduct from "./application/usecase/AddProduct";
 import ProductController from "./infra/controller/ProductController";
 import ProductRepositoryDatabase from "./infra/repository/ProductRepositoryDatabase";
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 const httpServer = new ExpressAdapter();
 const prisma = new PrismaClient();
