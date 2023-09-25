@@ -8,8 +8,22 @@ export default class ProductRepositoryMemory implements ProductRepository {
     this.products = [];
   }
 
-  async getAll(): Promise<Product[]> {
-    return this.products;
+  async getAll(
+    orderBy: "price" | "name",
+    order: "asc" | "desc",
+  ): Promise<Product[]> {
+    const sortedProducts = this.products.sort((a, b) => {
+      if (orderBy === "price") {
+        return order === "asc" ? a.price - b.price : b.price - a.price;
+      } else if (orderBy === "name") {
+        return order === "asc"
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name);
+      }
+      return 0;
+    });
+
+    return sortedProducts;
   }
 
   async save(item: Product): Promise<void> {

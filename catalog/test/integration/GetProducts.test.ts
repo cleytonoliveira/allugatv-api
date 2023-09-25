@@ -47,4 +47,118 @@ describe("GET /products", () => {
     expect(response.body).toHaveLength(3);
     expect(response.body).toEqual(newProducts);
   });
+
+  it("should return a list of subscription products ordered by price ascending", async () => {
+    const response = await request(app).get(
+      "/products?orderBy=price&order=asc",
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveLength(3);
+    expect(response.body).toEqual([
+      {
+        name: "Basic TV",
+        image: "https://via.placeholder.com/150",
+        price: 1499.99,
+        description: "Basic subscription",
+      },
+      {
+        name: "Premium TV",
+        image: "https://via.placeholder.com/150",
+        price: 2399.89,
+        description: "Premium subscription",
+      },
+      {
+        name: "Ultimate TV",
+        image: "https://via.placeholder.com/150",
+        price: 3499.99,
+        description: "Ultimate subscription",
+      },
+    ]);
+  });
+
+  it("should return a list of subscription products ordered by name descending", async () => {
+    const response = await request(app).get(
+      "/products?orderBy=name&order=desc",
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveLength(3);
+    expect(response.body).toEqual([
+      {
+        name: "Ultimate TV",
+        image: "https://via.placeholder.com/150",
+        price: 3499.99,
+        description: "Ultimate subscription",
+      },
+      {
+        name: "Premium TV",
+        image: "https://via.placeholder.com/150",
+        price: 2399.89,
+        description: "Premium subscription",
+      },
+      {
+        name: "Basic TV",
+        image: "https://via.placeholder.com/150",
+        price: 1499.99,
+        description: "Basic subscription",
+      },
+    ]);
+  });
+
+  it("should return a list of subscription products ordered by name ascending", async () => {
+    const response = await request(app).get("/products?orderBy=name&order=asc");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveLength(3);
+    expect(response.body).toEqual([
+      {
+        name: "Basic TV",
+        image: "https://via.placeholder.com/150",
+        price: 1499.99,
+        description: "Basic subscription",
+      },
+      {
+        name: "Premium TV",
+        image: "https://via.placeholder.com/150",
+        price: 2399.89,
+        description: "Premium subscription",
+      },
+      {
+        name: "Ultimate TV",
+        image: "https://via.placeholder.com/150",
+        price: 3499.99,
+        description: "Ultimate subscription",
+      },
+    ]);
+  });
+
+  it("should return a list of subscription products ordered by price descending", async () => {
+    const response = await request(app).get(
+      "/products?orderBy=price&order=desc",
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveLength(3);
+    expect(response.body).toEqual([
+      {
+        name: "Ultimate TV",
+        image: "https://via.placeholder.com/150",
+        price: 3499.99,
+        description: "Ultimate subscription",
+      },
+      {
+        name: "Premium TV",
+        image: "https://via.placeholder.com/150",
+        price: 2399.89,
+        description: "Premium subscription",
+      },
+      {
+        name: "Basic TV",
+        image: "https://via.placeholder.com/150",
+        price: 1499.99,
+        description: "Basic subscription",
+      },
+    ]);
+  });
 });
