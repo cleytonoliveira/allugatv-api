@@ -15,4 +15,15 @@ export default class ProductRepositoryDatabase implements ProductRepository {
       },
     });
   }
+
+  async getAll(): Promise<Product[]> {
+    const products = await this.prisma.product.findMany();
+    return products.map((product) => ({
+      productId: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      description: product.description || "",
+    }));
+  }
 }
