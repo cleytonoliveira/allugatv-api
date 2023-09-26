@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3003;
 
 const httpServer = new ExpressAdapter();
 const prisma = new PrismaClient();
-const productRepository = new SubscriptionRepositoryDatabase(prisma);
-const subscription = new Subscription(productRepository);
+const subscriptionRepository = new SubscriptionRepositoryDatabase(prisma);
+const subscription = new Subscription(subscriptionRepository);
 
 new SubscriptionController(httpServer, subscription);
 
