@@ -16,4 +16,16 @@ export default class SubscriptionRepositoryDatabase {
       },
     });
   }
+
+  async getSubscriptionByNameId(nameId: string): Promise<Subscription> {
+    const subscription = await this.prisma.subscription.findUnique({
+      where: { nameId },
+    });
+
+    if (!subscription) {
+      throw new Error("Subscription not found");
+    }
+
+    return subscription;
+  }
 }

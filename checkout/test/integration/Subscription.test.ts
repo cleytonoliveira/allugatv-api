@@ -3,12 +3,16 @@ import ExpressAdapter from "../../src/infra/http/ExpressAdapter";
 import SubscriptionRepositoryMemory from "../../src/infra/repository/SubscriptionRepositoryMemory";
 import SubscriptionController from "../../src/infra/controller/SubscriptionController";
 import Subscription from "../../src/application/usecase/Subscription";
+import GetSubscriptionByNameId from "../../src/application/usecase/GetSubscriptionByNameId";
 
-describe("POST /subscriptions", () => {
+describe("POST /subscription", () => {
   const httpServer = new ExpressAdapter();
   const subscriptionRepository = new SubscriptionRepositoryMemory();
   const subscription = new Subscription(subscriptionRepository);
-  new SubscriptionController(httpServer, subscription);
+  const getSubscriptionByNameId = new GetSubscriptionByNameId(
+    subscriptionRepository,
+  );
+  new SubscriptionController(httpServer, subscription, getSubscriptionByNameId);
 
   const app = httpServer.app;
   const newProduct = {
