@@ -4,13 +4,16 @@ import ProductController from "../../src/infra/controller/ProductController";
 import GetProducts from "../../src/application/usecase/GetProducts";
 import AddProduct from "../../src/application/usecase/AddProduct";
 import ProductRepositoryMemory from "../../src/infra/repository/ProductRepositoryMemory";
+import GetProduct from "../../src/application/usecase/GetProduct";
 
 describe("GET /products", () => {
   const httpServer = new ExpressAdapter();
   const productRepository = new ProductRepositoryMemory();
-  const getProduct = new GetProducts(productRepository);
+  const getProducts = new GetProducts(productRepository);
   const addProduct = new AddProduct(productRepository);
-  new ProductController(httpServer, getProduct, addProduct);
+  const getProduct = new GetProduct(productRepository);
+
+  new ProductController(httpServer, getProducts, getProduct, addProduct);
   const app = httpServer.app;
 
   const newProducts = [
@@ -45,7 +48,29 @@ describe("GET /products", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(3);
-    expect(response.body).toEqual(newProducts);
+    expect(response.body).toEqual([
+      {
+        productId: 1,
+        name: "Basic TV",
+        image: "https://via.placeholder.com/150",
+        price: 1499.99,
+        description: "Basic subscription",
+      },
+      {
+        productId: 2,
+        name: "Premium TV",
+        image: "https://via.placeholder.com/150",
+        price: 2399.89,
+        description: "Premium subscription",
+      },
+      {
+        productId: 3,
+        name: "Ultimate TV",
+        image: "https://via.placeholder.com/150",
+        price: 3499.99,
+        description: "Ultimate subscription",
+      },
+    ]);
   });
 
   it("should return a list of subscription products ordered by price ascending", async () => {
@@ -57,18 +82,21 @@ describe("GET /products", () => {
     expect(response.body).toHaveLength(3);
     expect(response.body).toEqual([
       {
+        productId: 1,
         name: "Basic TV",
         image: "https://via.placeholder.com/150",
         price: 1499.99,
         description: "Basic subscription",
       },
       {
+        productId: 2,
         name: "Premium TV",
         image: "https://via.placeholder.com/150",
         price: 2399.89,
         description: "Premium subscription",
       },
       {
+        productId: 3,
         name: "Ultimate TV",
         image: "https://via.placeholder.com/150",
         price: 3499.99,
@@ -86,18 +114,21 @@ describe("GET /products", () => {
     expect(response.body).toHaveLength(3);
     expect(response.body).toEqual([
       {
+        productId: 3,
         name: "Ultimate TV",
         image: "https://via.placeholder.com/150",
         price: 3499.99,
         description: "Ultimate subscription",
       },
       {
+        productId: 2,
         name: "Premium TV",
         image: "https://via.placeholder.com/150",
         price: 2399.89,
         description: "Premium subscription",
       },
       {
+        productId: 1,
         name: "Basic TV",
         image: "https://via.placeholder.com/150",
         price: 1499.99,
@@ -113,18 +144,21 @@ describe("GET /products", () => {
     expect(response.body).toHaveLength(3);
     expect(response.body).toEqual([
       {
+        productId: 1,
         name: "Basic TV",
         image: "https://via.placeholder.com/150",
         price: 1499.99,
         description: "Basic subscription",
       },
       {
+        productId: 2,
         name: "Premium TV",
         image: "https://via.placeholder.com/150",
         price: 2399.89,
         description: "Premium subscription",
       },
       {
+        productId: 3,
         name: "Ultimate TV",
         image: "https://via.placeholder.com/150",
         price: 3499.99,
@@ -142,18 +176,21 @@ describe("GET /products", () => {
     expect(response.body).toHaveLength(3);
     expect(response.body).toEqual([
       {
+        productId: 3,
         name: "Ultimate TV",
         image: "https://via.placeholder.com/150",
         price: 3499.99,
         description: "Ultimate subscription",
       },
       {
+        productId: 2,
         name: "Premium TV",
         image: "https://via.placeholder.com/150",
         price: 2399.89,
         description: "Premium subscription",
       },
       {
+        productId: 1,
         name: "Basic TV",
         image: "https://via.placeholder.com/150",
         price: 1499.99,

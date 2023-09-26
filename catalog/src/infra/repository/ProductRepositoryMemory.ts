@@ -3,9 +3,11 @@ import Product from "../../domain/entities/Product";
 
 export default class ProductRepositoryMemory implements ProductRepository {
   products: Product[];
+  nextProductId: number;
 
   constructor() {
     this.products = [];
+    this.nextProductId = 1;
   }
 
   async getAll(
@@ -26,7 +28,18 @@ export default class ProductRepositoryMemory implements ProductRepository {
     return sortedProducts;
   }
 
-  async save(item: Product): Promise<void> {
-    this.products.push(item);
+  async save(product: Product): Promise<void> {
+    const newProduct = {
+      ...product,
+      productId: this.nextProductId++,
+    };
+    this.products.push(newProduct);
+  }
+
+  async getById(productId: number): Promise<Product | null> {
+    const product = this.products.find(
+      (product) => product.productId === productId,
+    );
+    return product || null;
   }
 }
