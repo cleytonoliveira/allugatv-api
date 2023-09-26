@@ -1,5 +1,6 @@
 export default class Product {
   constructor(
+    readonly productId: number,
     readonly name: string,
     readonly image: string,
     readonly price: number,
@@ -12,6 +13,6 @@ export default class Product {
     price: number,
     description?: string,
   ) {
-    return new Product(name, image, price, description);
+    return new Product(0, name, image, price, description);
   }
 }

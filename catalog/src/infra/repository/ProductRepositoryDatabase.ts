@@ -33,4 +33,24 @@ export default class ProductRepositoryDatabase implements ProductRepository {
       description: product.description || "",
     }));
   }
+
+  async getById(productId: number): Promise<Product | null> {
+    const product = await this.prisma.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+
+    if (!product) {
+      return null;
+    }
+
+    return new Product(
+      product.id,
+      product.name,
+      product.image,
+      product.price,
+      product.description || "",
+    );
+  }
 }
