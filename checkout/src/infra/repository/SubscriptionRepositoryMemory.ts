@@ -19,4 +19,16 @@ export default class SubscriptionRepositoryDatabase
     };
     this.subscription.push(newSubscription);
   }
+
+  async getSubscriptionByNameId(nameId: string): Promise<Subscription> {
+    const subscription = this.subscription.find(
+      (subscription) => subscription.nameId === nameId,
+    );
+
+    if (!subscription) {
+      throw new Error("Subscription not found");
+    }
+
+    return subscription;
+  }
 }
