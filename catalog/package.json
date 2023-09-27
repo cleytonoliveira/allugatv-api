@@ -12,7 +12,8 @@
   "author": "Cleyton Oliveira <cleytonoliveirapro@gmail.com>",
   "license": "MIT",
   "prisma": {
-    "schema": "src/infra/database/prisma/schema.prisma"
+    "schema": "src/infra/database/prisma/schema.prisma",
+    "seed": "ts-node src/infra/database/prisma/seed/seed.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.14",
