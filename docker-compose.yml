@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  database:
+    image: postgres:15.4-alpine
+    ports:
+      - 5432:5432
+    container_name: postgres-database
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    volumes:
+      - ./db/:/data/db/
+    networks:
+      - ecommerce
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3001
+    restart: always
+    depends_on:
+      - database
+      - catalog
+      - checkout
+      - user
+    volumes:
+      - ./app/api-gateway:/app/api-gateway
+    env_file:
+      - ./api-gateway/.env.example
+    networks:
+      - ecommerce
+
+  catalog:
+    build:
+      context: ./catalog
+      dockerfile: Dockerfile
+    ports:
+      - 3002:3002
+    restart: always
+    depends_on:
+      - database
+    volumes:
+      - ./app/catalog:/app/catalog
+    env_file:
+      - ./catalog/.env.example
+    networks:
+      - ecommerce
+
+  checkout:
+    build:
+      context: ./checkout
+      dockerfile: Dockerfile
+    ports:
+      - 3003:3003
+    restart: always
+    depends_on:
+      - database
+    volumes:
+      - ./app/checkout:/app/checkout
+    env_file:
+      - ./checkout/.env.example
+    networks:
+      - ecommerce
+
+  user:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    ports:
+      - 3004:3004
+    restart: always
+    depends_on:
+      - database
+    volumes:
+      - ./app/user:/app/user
+    env_file:
+      - ./user/.env.example
+    networks:
+      - ecommerce
+
+networks:
+  ecommerce:
