@@ -16,12 +16,11 @@ export default class UserController {
     });
 
     this.httpServer.on("post", "/login", async (body: any) => {
-      const { name, email } = await signIn.execute(body);
+      const { token } = await signIn.execute(body);
       return {
         statusCode: 200,
         body: {
-          name,
-          email,
+          token,
         },
       };
     });
