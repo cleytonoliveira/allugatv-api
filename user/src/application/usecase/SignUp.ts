@@ -7,7 +7,7 @@ type Input = {
   password: string;
 };
 
-export default class CreateUser {
+export default class SignUp {
   constructor(readonly userRepository: UserRepository) {}
 
   async execute(input: Input) {

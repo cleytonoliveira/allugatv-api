@@ -1,15 +1,15 @@
 import request from "supertest";
 import UserController from "../../src/infra/controller/UserController";
 import ExpressAdapter from "../../src/infra/http/ExpressAdapter";
-import CreateUser from "../../src/application/usecase/CreateUser";
+import SignUp from "../../src/application/usecase/SignUp";
 import UserRepositoryMemory from "../../src/infra/repository/UserRepositoryMemory";
-import VerifyLogin from "../../src/application/usecase/VerifyLogin";
+import SignIn from "../../src/application/usecase/SignIn";
 
 describe("POST /register", () => {
   const httpServer = new ExpressAdapter();
   const userRepository = new UserRepositoryMemory();
-  const user = new CreateUser(userRepository);
-  const login = new VerifyLogin(userRepository);
+  const user = new SignUp(userRepository);
+  const login = new SignIn(userRepository);
   new UserController(httpServer, user, login);
   const app = httpServer.app;
   const newUser = {
